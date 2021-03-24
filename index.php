@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="style.css">
     <title>Vieraskirja</title>
 </head>
+
 <body>
     <h1>Vieraskirja</h1>
-    <form action="" method="POST">
+    <form action="guest.php" method="POST">
             <label for="name">Nimi</label>
             <br><br>
             <input type="text" name="name">
@@ -24,27 +25,5 @@
             <br><br>
             <input type="submit" name="submit">
     </form>
-    <?php
-        if (isset($_POST["name"]) && isset($_POST["email"])) {
-
-            // Muokataan objekti
-            $xml = simplexml_load_file("data.xml");
-            $message = str_replace(PHP_EOL, "<br>", $_POST["message"]);
-            $form = [$_POST["name"], $_POST["email"], $message];
-            $newGuest = $xml -> addChild("guest");
-            $newGuest -> addChild("name", $form[0]);
-            $newGuest -> addChild("email", $form[1]);
-            $newGuest -> addChild("message", $form[2]);
-
-            // Tallennetaan muokattu objekti tiedostoon
-            $dom = new DOMDocument("1.0");
-            $dom -> preserveWhiteSpace = false;
-            $dom -> formatOutput = true;
-            $dom -> loadXML($xml->asXML());
-            $dom -> save("data.xml");
-        }
-
-        
-    ?>
 </body>
 </html>
