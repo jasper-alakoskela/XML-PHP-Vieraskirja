@@ -1,6 +1,7 @@
 <?php
+// Haetaan ja poistetaan index
 if (!isset($_GET["index"])) {
-    header("Location: guest.php");
+    header("Location: control_panel.php");
     die();
 }
 
@@ -17,5 +18,4 @@ $dom -> formatOutput = true;
 $dom -> loadXML($xml->asXML());
 $dom -> save("data.xml");
 
-header("Location: guest.php");
-
+header("Location: control_panel.php");

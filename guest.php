@@ -8,10 +8,29 @@
     <title>Vieraskirja</title>
 </head>
 <body>
-<h1>Vierailijat</h1>
-<a href="index.php">Etusivulle</a>
+<h2>Vierailijat</h2>
+<a style='text-decoration:none; background-color: rgb(230, 230, 230); color: black; border: solid 2px black; border-radius: 5px; padding: 2px;' href="index.html">Etusivulle</a>
+
 <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        if (empty($_POST["name"]) && empty($_POST["email"])) {
+            echo "<script>alert('Nimi ja sähköposti puuttuu')</script>";
+            echo "<script>location.href='index.html'</script>";
+            return false;
+        }
+    
+        else if (empty($_POST["name"])) {
+            echo "<script>alert('Nimi puuttuu')</script>";
+            echo "<script>location.href='index.html'</script>";
+            return false;
+        }
+    
+        else if (empty($_POST["email"])) {
+            echo "<script>alert('Sähköposti puuttuu')</script>";
+            echo "<script>location.href='index.html'</script>";
+            return false;
+        }
+    
 
         // Muokataan objekti
         $xml = simplexml_load_file("data.xml");
@@ -27,22 +46,24 @@
         $dom -> formatOutput = true;
         $dom -> loadXML($xml->asXML());
         $dom -> save("data.xml");
-    }
 
-    // Näytetään XML objekti sivulla
-    if (!isset($_GET["index"])) {
-        header("Location: guest.php");
-        die();
-    }
-    $index = intval($_GET["index"]);
-    $xml = simplexml_load_file("data.xml");
-    foreach ($xml->guest as $guest) {
+        // Näytetään XML objekti sivulla
+        $xml = simplexml_load_file("data.xml");
+        foreach ($xml->guest as $guest) {
         echo "<h3>$guest->name</h3>";
         echo "<p>$guest->email<p>";
         echo "<p>$guest->message<p>";
-        echo "<a href='delete.php?index=".$index."'>Poista</a>";
-    }
-    $index++;
+        }
 ?>
+
+<h2>Hallintapaneeli</h2>
+<form action="control_panel.php" method="POST">
+    <input type="text" placeholder="Nimi" name="username">
+    <br><br>
+    <input type="password" placeholder="Salasana" name="password">
+    <br><br>
+    <input type="submit" value="Kirjaudu" name="login">
+</form>
+
 </body>
 </html>
