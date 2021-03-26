@@ -8,10 +8,12 @@
     <title>Vieraskirja</title>
 </head>
 <body>
-<h2>Vierailijat</h2>
+<h1>Vierailijat</h1>
 <a style='text-decoration:none; background-color: rgb(230, 230, 230); color: black; border: solid 2px black; border-radius: 5px; padding: 2px;' href="index.html">Etusivulle</a>
 
 <?php
+
+    if (isset($_POST["submit"])) {
 
         if (empty($_POST["name"]) && empty($_POST["email"])) {
             echo "<script>alert('Nimi ja sähköposti puuttuu')</script>";
@@ -30,7 +32,6 @@
             echo "<script>location.href='index.html'</script>";
             return false;
         }
-    
 
         // Muokataan objekti
         $xml = simplexml_load_file("data.xml");
@@ -46,6 +47,8 @@
         $dom -> formatOutput = true;
         $dom -> loadXML($xml->asXML());
         $dom -> save("data.xml");
+
+        }
 
         // Näytetään XML objekti sivulla
         $xml = simplexml_load_file("data.xml");

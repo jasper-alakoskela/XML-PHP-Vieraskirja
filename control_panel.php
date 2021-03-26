@@ -8,7 +8,7 @@
     <title>Vieraskirja</title>
 </head>
 <body>
-    <h2>Vierailijat</h2>
+    <h1>Vierailijat</h1>
     <a style='text-decoration:none; background-color: rgb(230, 230, 230); color: black; border: solid 2px black; border-radius: 5px; padding: 2px;' href="index.html">Etusivulle</a>
     <?php
         if (isset($_POST["login"])) {
